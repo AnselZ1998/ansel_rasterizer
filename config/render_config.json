@@ -1,0 +1,23 @@
+{
+  "base_dir": "/media/sf_share/graphics/zjf/Assignment3 _bak/Code",
+  "model": {
+    "obj": "/media/sf_share/graphics/zjf/Assignment3 _bak/Code/models/spot/spot_triangulated_good.obj",
+    "angle": 140.0
+  },
+  "textures": {
+    "base_color": "/media/sf_share/graphics/zjf/Assignment3 _bak/Code/models/spot/spot_texture.png",
+    "height": "/media/sf_share/graphics/zjf/Assignment3 _bak/Code/models/spot/hmap.jpg"
+  },
+  "camera": {
+    "eye": [0.0, 0.0, 10.0],
+    "fov": 45.0,
+    "znear": 0.1,
+    "zfar": 50.0,
+    "aspect": 1.0
+  },
+  "render": {
+    "width": 100,
+    "height": 100,
+    "shader": "texture_fragment_shader"   
+  }
+}
