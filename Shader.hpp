@@ -23,6 +23,7 @@ struct fragment_shader_payload
     Eigen::Vector3f color;
     Eigen::Vector3f normal;
     Eigen::Vector2f tex_coords;
+    Eigen::Vector3f amb_light_intensity;
     Texture* texture;
 };
 

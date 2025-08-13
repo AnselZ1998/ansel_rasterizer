@@ -19,7 +19,7 @@ add_executable(Rasterizer
 
     rasterizer.hpp
     Texture.hpp
-    Triangle.hpp
+    Triangle.hpp 
     Shader.hpp
     global.hpp
     OBJ_Loader.h
@@ -31,7 +31,7 @@ target_include_directories(Rasterizer
         ${OpenCV_INCLUDE_DIRS}
         ${EIGEN3_INCLUDE_DIRS}
         ${CMAKE_SOURCE_DIR}  # 工程根目录
-        ${CMAKE_SOURCE_DIR}/nlohmann  # 让 #include "nlohmann/json.hpp" 能找到
+        ${CMAKE_SOURCE_DIR}/nlohmann  
 )
 
 # 链接库

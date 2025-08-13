@@ -311,6 +311,7 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
 
                     fragment_shader_payload payload( interpolated_color, interpolated_normal.normalized(), interpolated_texcoords, texture ? &*texture : nullptr);
                     payload.view_pos = interpolated_shadingcoords;
+                    payload.amb_light_intensity = amb_light_intensity;
                     auto pixel_color = fragment_shader(payload);
 
 
@@ -334,6 +335,11 @@ void rst::rasterizer::set_model(const Eigen::Matrix4f& m)
 void rst::rasterizer::set_view(const Eigen::Matrix4f& v)
 {
     view = v;
+}
+
+void rst::rasterizer::set_amb_light_intensity(const Eigen::Vector3f& ali)
+{
+    amb_light_intensity = ali;
 }
 
 void rst::rasterizer::set_projection(const Eigen::Matrix4f& p)

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <functional>
+#include <fstream>
 
 #include "global.hpp"
 #include "rasterizer.hpp"
@@ -9,7 +11,6 @@
 #include "OBJ_Loader.h"
 #include "nlohmann/json.hpp"
 #include "Config.hpp"
-
 
 Eigen::Matrix4f get_view_matrix(Eigen::Vector3f eye_pos)
 {
@@ -111,7 +112,7 @@ Eigen::Vector3f texture_fragment_shader(const fragment_shader_payload& payload)
     auto l2 = light{{-20, 20, 0}, {500, 500, 500}};
 
     std::vector<light> lights = {l1, l2};
-    Eigen::Vector3f amb_light_intensity{10, 10, 10};
+    Eigen::Vector3f amb_light_intensity = payload.amb_light_intensity;
     Eigen::Vector3f eye_pos{0, 0, 10};
 
     float p = 150;
@@ -153,10 +154,11 @@ Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload& payload)
     auto l2 = light{{-20, 20, 0}, {500, 500, 500}};
 
     std::vector<light> lights = {l1, l2};
-    Eigen::Vector3f amb_light_intensity{10, 10, 10};
+    Eigen::Vector3f amb_light_intensity = payload.amb_light_intensity;
+    //Eigen::Vector3f amb_light_intensity{10, 10, 10};
     Eigen::Vector3f eye_pos{0, 0, 10};
 
-    float p = 150;
+    float p = 30;
 
     Eigen::Vector3f color = payload.color;
     Eigen::Vector3f point = payload.view_pos;
@@ -181,7 +183,6 @@ Eigen::Vector3f phong_fragment_shader(const fragment_shader_payload& payload)
         
         //diffuse
         
-
         Eigen::Vector3f diffuse_color = kd.cwiseProduct(i / r_square) * lambert_cosine;
         Eigen::Vector3f specular_color = ks.cwiseProduct(i / r_square) * std::pow(specular_cosine, p);
         result_color += (ambient + diffuse_color + specular_color);
@@ -417,7 +418,7 @@ int main(int argc, const char** argv)
         }
     }
 
-    std::function<Eigen::Vector3f(fragment_shader_payload)> active_shader = choose_shader(c.render_config.shader);
+    std::function<Eigen::Vector3f(const fragment_shader_payload&)> active_shader = choose_shader(c.render_config.shader);
 
     // set shader
     r.set_vertex_shader(vertex_shader);
@@ -431,6 +432,7 @@ int main(int argc, const char** argv)
         r.set_model(get_model_matrix(c.model_config.angle));
         r.set_view(get_view_matrix(c.camera_config.eye));
         r.set_projection(get_projection_matrix(45.0, 1, 0.1, 50));
+        r.set_amb_light_intensity(c.render_config.amb_light_intensity);
 
         //r.draw(pos_id, ind_id, col_id, rst::Primitive::Triangle);
         r.draw(TriangleList);
@@ -444,11 +446,29 @@ int main(int argc, const char** argv)
         {
             c.model_config.angle -= 20;
             std::cout << "angle-20" <<std::endl;
+            
         }
         else if (key == 'd')
         {
             c.model_config.angle += 20;
             std::cout << "angle +20" <<std::endl;
+            
+        }
+        else if (key == 'w')
+        {
+            c.render_config.amb_light_intensity = (c.render_config.amb_light_intensity + Eigen::Vector3f::Constant(2.f)).cwiseMax(0.0f);
+
+            std::cout << "amb_light += 2 -> "
+                    << c.render_config.amb_light_intensity.transpose() << '\n';
+        }
+
+
+        else if (key == 's')
+        {
+            c.render_config.amb_light_intensity = (c.render_config.amb_light_intensity - Eigen::Vector3f::Constant(2.f)).cwiseMax(0.0f);
+
+            std::cout << "amb_light -= 2 -> "
+                    << c.render_config.amb_light_intensity.transpose() << '\n';
         }
 
     }

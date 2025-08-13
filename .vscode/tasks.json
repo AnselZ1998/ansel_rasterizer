@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake: Configure (Release)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .."
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: Build (Release)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake --build build --config Release"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true },
+      "dependsOn": ["CMake: Configure (Release)"]
+    },
+    {
+      "label": "CMake: Clean",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "cmake --build build --target clean --config Release"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "CMake: Nuke build (删除缓存)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "rm -rf build"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}

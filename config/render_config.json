@@ -16,8 +16,9 @@
     "aspect": 1.0
   },
   "render": {
-    "width": 100,
-    "height": 100,
-    "shader": "texture_fragment_shader"   
+    "width": 300,
+    "height": 300,
+    "amb_light_intensity": [10.0, 10.0, 10.0],
+    "shader": "phong"
   }
 }

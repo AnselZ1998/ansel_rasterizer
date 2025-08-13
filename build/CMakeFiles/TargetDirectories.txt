@@ -1,3 +1,0 @@
-/media/sf_share/graphics/zjf/ansel_rasterizer/Code/build/CMakeFiles/rebuild_cache.dir
-/media/sf_share/graphics/zjf/ansel_rasterizer/Code/build/CMakeFiles/Rasterizer.dir
-/media/sf_share/graphics/zjf/ansel_rasterizer/Code/build/CMakeFiles/edit_cache.dir

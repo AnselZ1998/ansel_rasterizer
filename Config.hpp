@@ -35,6 +35,7 @@ struct RenderConfig {
     int width;
     int height ;
     std::string shader;
+    Eigen::Vector3f amb_light_intensity;
 };
 
 struct ModelConfig {
@@ -105,6 +106,11 @@ struct Config
                 render_config.width  = jr.value("width", 100);
                 render_config.height = jr.value("height", 100);
                 render_config.shader = jr.value("shader", "texture_fragment_shader");
+                if (jr.contains("amb_light_intensity") && jr["amb_light_intensity"].is_array() && jr["amb_light_intensity"].size()==3) {
+                                render_config.amb_light_intensity = Eigen::Vector3f(jr["amb_light_intensity"][0].get<float>(),
+                                                                    jr["amb_light_intensity"][1].get<float>(),
+                                                                    jr["amb_light_intensity"][2].get<float>());
+                }
             }
 
         // model

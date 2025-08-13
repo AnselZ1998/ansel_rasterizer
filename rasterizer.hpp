@@ -77,6 +77,8 @@ namespace rst
 
         void set_pixel(const Vector2i &point, const Eigen::Vector3f &color);
 
+        void set_amb_light_intensity(const Eigen::Vector3f& ali);
+
         void clear(Buffers buff);
 
         void draw(pos_buf_id pos_buffer, ind_buf_id ind_buffer, col_buf_id col_buffer, Primitive type);
@@ -95,6 +97,7 @@ namespace rst
         Eigen::Matrix4f model;
         Eigen::Matrix4f view;
         Eigen::Matrix4f projection;
+        Eigen::Vector3f amb_light_intensity;
 
         int normal_id = -1;
 
