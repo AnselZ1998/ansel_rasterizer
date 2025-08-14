@@ -309,11 +309,10 @@ void rst::rasterizer::rasterize_triangle(const Triangle& t, const std::array<Eig
                     auto interpolated_texcoords = interpolate(alpha, beta, gamma, t.tex_coords[0], t.tex_coords[1], t.tex_coords[2], 1);
                     auto interpolated_shadingcoords = interpolate(alpha, beta, gamma, view_pos[0], view_pos[1], view_pos[2], 1);
 
-                    fragment_shader_payload payload( interpolated_color, interpolated_normal.normalized(), interpolated_texcoords, texture ? &*texture : nullptr);
+                    fragment_shader_payload payload( interpolated_color, interpolated_normal.normalized(), interpolated_texcoords, basecolor_texture ? &*basecolor_texture : nullptr, displacement_texture ? &*displacement_texture : nullptr);
                     payload.view_pos = interpolated_shadingcoords;
                     payload.amb_light_intensity = amb_light_intensity;
                     auto pixel_color = fragment_shader(payload);
-
 
                     set_pixel(Eigen::Vector2i(static_cast<int>(x), static_cast<int>(y)), pixel_color);
                 }
@@ -364,7 +363,8 @@ rst::rasterizer::rasterizer(int w, int h) : width(w), height(h)
     frame_buf.resize(w * h);
     depth_buf.resize(w * h);
 
-    texture = std::nullopt;
+    basecolor_texture = std::nullopt;
+    displacement_texture = std::nullopt; 
 }
 
 int rst::rasterizer::get_index(int x, int y)
