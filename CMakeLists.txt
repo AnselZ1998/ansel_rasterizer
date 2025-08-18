@@ -16,6 +16,7 @@ add_executable(Rasterizer
     rasterizer.cpp
     Texture.cpp
     Triangle.cpp
+    Shader.cpp
 
     rasterizer.hpp
     Texture.hpp

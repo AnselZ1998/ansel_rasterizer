@@ -99,6 +99,13 @@ int main(int argc, const char** argv)
     }
     r.set_basecolor_texture(Texture(c.texture_config.base_color));
 
+    if (!CheckFileExist(c.texture_config.height))
+    {
+        std::cout << "Config File Can Not Open: " << c.texture_config.height << std::endl;
+        return -1;
+    }
+    r.set_displacement_texture(Texture(c.texture_config.height));
+
     // set .obj File
     if (!CheckFileExist(c.model_config.obj))
     {
@@ -127,7 +134,7 @@ int main(int argc, const char** argv)
 
     // set shader
     r.set_vertex_shader(vertex_shader);
-    r.set_fragment_shader(ansel_standard_shader());
+    r.set_fragment_shader(ansel_standard_shader);
 
     int key = 0;
     int frame_count = 0;

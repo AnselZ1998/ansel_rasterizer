@@ -74,7 +74,7 @@ namespace rst
         void set_displacement_texture(Texture tex) { displacement_texture = tex; }
 
         void set_vertex_shader(std::function<Eigen::Vector3f(vertex_shader_payload)> vert_shader);
-        void set_fragment_shader(std::function<Eigen::Vector3f(fragment_shader_payload)> frag_shader);
+        void set_fragment_shader(std::function<Eigen::Vector3f(const fragment_shader_payload&)> frag_shader);
 
         void set_pixel(const Vector2i &point, const Eigen::Vector3f &color);
 
@@ -110,7 +110,7 @@ namespace rst
         std::optional<Texture> basecolor_texture;
         std::optional<Texture> displacement_texture;
 
-        std::function<Eigen::Vector3f(fragment_shader_payload)> fragment_shader;
+        std::function<Eigen::Vector3f(const fragment_shader_payload&)> fragment_shader;
         std::function<Eigen::Vector3f(vertex_shader_payload)> vertex_shader;
 
         std::vector<Eigen::Vector3f> frame_buf;
